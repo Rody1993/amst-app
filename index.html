@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>AMST</title>
+<link rel="stylesheet" href="./css/app.css">
+</head>
+<body class="app">
+
+  <header class="appbar">
+    <span class="appname">AMST</span>
+    <span id="mode-note" class="subnote"></span>
+    <button type="button" class="gearbtn" aria-label="設定" onclick="document.getElementById('pat-dialog').showModal()">⚙</button>
+  </header>
+
+  <main>
+
+    <!-- 攻めタブ -->
+    <div class="tab on" id="tab-attack">
+      <div id="attack-list"></div>
+      <div id="attack-day" style="display:none;"></div>
+    </div>
+
+    <!-- 守りタブ -->
+    <div class="tab" id="tab-defense">
+      <div id="defense-list"></div>
+      <div id="defense-day" style="display:none;"></div>
+    </div>
+
+    <!-- 学習タブ -->
+    <div class="tab" id="tab-learning">
+      <div id="learning"></div>
+    </div>
+
+    <!-- 保有タブ -->
+    <div class="tab" id="tab-holdings">
+      <div id="holdings"></div>
+    </div>
+
+    <!-- 🧪 実験タブ（本命v2 紙PF） -->
+    <div class="tab" id="tab-v2">
+      <div id="v2"></div>
+    </div>
+
+  </main>
+
+  <div class="tabbar">
+    <button class="on" id="tb-attack" onclick="setTab('attack')"><span class="ico">⚔️</span>攻め</button>
+    <button id="tb-defense" onclick="setTab('defense')"><span class="ico">🛡️</span>守り</button>
+    <button id="tb-learning" onclick="setTab('learning')"><span class="ico">🧠</span>学習</button>
+    <button id="tb-holdings" onclick="setTab('holdings')"><span class="ico">💼</span>保有</button>
+    <button id="tb-v2" onclick="setTab('v2')"><span class="ico">🧪</span>実験</button>
+  </div>
+
+  <dialog id="pat-dialog">
+    <p class="subnote">GitHubのPersonal Access Tokenを入力すると実データを表示します</p>
+    <p><input id="pat-input" type="password" autocomplete="off" placeholder="ghp_..."></p>
+    <div class="dialog-actions">
+      <button type="button" onclick="savePat()">保存</button>
+      <button type="button" onclick="this.closest('dialog').close()">閉じる</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

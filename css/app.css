@@ -1,0 +1,236 @@
+/* ============================================================
+   AMST app.css
+   出典: reference/mock-v6.html の .screen.app 内側スタイル（承認済みモックv6.1）
+   --a-* トークンは .app セレクタから :root に付け替え（昼配色のみ・固定。夜配色はモックに無し）
+   ============================================================ */
+
+:root{
+  --a-bg:#EFF2F7; --a-panel:#FFFFFF; --a-ink:#1C2434; --a-sub:#68738A;
+  --a-line:#E3E7EF; --a-gold:#A87908; --a-gold-soft:#FBF3DC;
+  --a-up:#C6392E; --a-up-soft:#FCEBE9; --a-down:#2F6FA8;
+  --a-card-line:#EAD9AE; --a-head:#1C2434;
+}
+
+/* body: モックの外側 body{} 由来（font-family/margin）+ .app 本体トークン定義。
+   .app は端末フレーム(.phone/.screen)の中で使われていたが、ここでは body 自体に付与する */
+body{
+  margin:0;
+  font-family:"Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+}
+.app{ min-height:680px; display:flex; flex-direction:column; font-size:14.5px;
+  line-height:1.65;
+  background:var(--a-bg); color:var(--a-ink);
+}
+.app header.appbar{ padding:10px 20px 12px; display:flex; align-items:center; gap:10px;
+  position:sticky; top:0; z-index:10; background:var(--a-bg); border-bottom:1px solid var(--a-line); }
+.app .appname{ font-family:"Hiragino Mincho ProN",serif; font-size:19px;
+  color:var(--a-head); font-weight:600; }
+/* overflow:hiddenはreference/mock-v6.htmlの固定サイズ「電話フレーム」用の名残。
+   実アプリはbody自体がページ全体なので不要 — かつ.backbtnのposition:stickyの
+   基準（scroll container）がmainになってしまい、viewportに対して固定されなくなるバグの原因だった
+   （v1.1 Fix2で発覚・削除） */
+.app main{ flex:1; padding:4px 16px 16px; padding-bottom:84px; }
+
+.panel{ background:var(--a-panel); border:1px solid var(--a-line);
+  border-radius:16px; padding:14px 16px; margin-bottom:12px; }
+.panel h3{ font-size:12px; letter-spacing:.14em; color:var(--a-sub); margin:0 0 8px;
+  font-weight:600; }
+
+/* 受信箱（一覧行） */
+.mailrow{ display:flex; align-items:center; gap:12px; padding:13px 14px;
+  background:var(--a-panel); border:1px solid var(--a-line); border-radius:14px;
+  margin-bottom:9px; cursor:pointer; }
+.mailrow .date{ font-variant-numeric:tabular-nums; font-weight:700; width:74px;
+  flex:none; font-size:14px; }
+.mailrow .date small{ display:block; font-weight:400; color:var(--a-sub); font-size:11px; }
+.mailrow .digest{ flex:1; font-size:12.5px; color:var(--a-sub); line-height:1.5; }
+.mailrow .digest b{ color:var(--a-ink); }
+.mailrow .chev{ color:var(--a-sub); flex:none; }
+.mailrow.unread{ border-color:var(--a-gold); box-shadow:0 1px 6px rgba(168,121,8,.12); }
+.mailrow.unread .date::after{ content:"●"; color:var(--a-gold); font-size:8px;
+  vertical-align:3px; margin-left:5px; }
+.weekband{ font-size:11px; letter-spacing:.12em; color:var(--a-sub); margin:16px 4px 8px; }
+
+/* 日付詳細ビュー */
+.backbtn{ display:block; align-items:center; gap:6px; font-size:13px;
+  color:var(--a-gold); cursor:pointer; user-select:none; margin:0 0 10px;
+  font-weight:600; position:sticky; top:56px; z-index:9; background:var(--a-bg);
+  padding:6px 0; }
+
+.stockcard{ background:var(--a-panel); border:1.5px solid var(--a-card-line);
+  border-radius:16px; margin-bottom:12px; overflow:hidden; }
+.stockcard .head{ padding:14px 16px 12px; cursor:pointer; }
+.tickerline{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.badge-new{ background:var(--a-gold); color:#FFF; font-size:10.5px; font-weight:700;
+  border-radius:6px; padding:2px 7px; letter-spacing:.06em; }
+.tickername{ font-weight:700; font-size:15.5px; }
+.tickercode{ color:var(--a-sub); font-size:12.5px; font-variant-numeric:tabular-nums; }
+.catch{ margin:8px 0 10px; font-size:14px; }
+.ifdoco{ display:flex; gap:8px; flex-wrap:wrap; font-variant-numeric:tabular-nums; }
+.pricechip{ font-size:12.5px; border-radius:8px; padding:4px 9px;
+  background:var(--a-bg); border:1px solid var(--a-line); }
+.pricechip.target{ color:var(--a-up); border-color:var(--a-up); }
+.pricechip.stop{ color:var(--a-down); border-color:var(--a-down); }
+.openbtn{ display:flex; justify-content:center; gap:6px; padding:9px;
+  font-size:12.5px; color:var(--a-gold); border-top:1px dashed var(--a-line);
+  cursor:pointer; user-select:none; }
+.detail{ display:none; padding:4px 16px 16px; border-top:1px solid var(--a-line);
+  background:var(--a-bg); }
+.stockcard.open .detail{ display:block; }
+.stockcard.open .openbtn .arrow{ transform:rotate(180deg); }
+.openbtn .arrow{ transition:transform .2s; }
+@media (prefers-reduced-motion: reduce){ .openbtn .arrow{ transition:none; } }
+.detail h4{ font-size:11.5px; letter-spacing:.12em; color:var(--a-sub); margin:14px 0 4px; }
+.detail p{ margin:0; font-size:13.5px; }
+.verify{ color:#2E7D46; }
+.skull{ color:var(--a-up); }
+.histnote{ font-size:12px; color:var(--a-sub); background:var(--a-panel);
+  border:1px solid var(--a-line); border-radius:8px; padding:8px 10px; margin-top:12px; }
+
+.exitcard{ background:var(--a-up-soft); border:1px solid var(--a-up);
+  border-radius:14px; padding:12px 14px; margin-bottom:10px; font-size:13.5px; }
+.exitcard .who{ font-weight:700; }
+.accuracy{ font-size:11.5px; color:var(--a-sub); margin-top:4px; }
+.obsrow{ display:flex; align-items:center; gap:8px; font-size:13.5px;
+  color:var(--a-sub); padding:9px 4px; border-bottom:1px solid var(--a-line); }
+.obsrow:last-child{ border-bottom:0; }
+.obsrow b{ color:var(--a-ink); }
+
+/* 学習タブ: 成績 */
+.bignum{ font-size:34px; font-weight:800; font-variant-numeric:tabular-nums;
+  letter-spacing:.01em; line-height:1.1; }
+.statgrid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.stat{ background:var(--a-panel); border:1px solid var(--a-line);
+  border-radius:14px; padding:14px; }
+.stat .label{ font-size:11.5px; color:var(--a-sub); margin-bottom:4px; }
+.stat .value{ font-size:20px; font-weight:700; font-variant-numeric:tabular-nums; }
+.up{ color:var(--a-up); } .down{ color:var(--a-down); }
+.repair{ display:inline-block; background:var(--a-gold-soft); color:var(--a-gold);
+  border:1px solid var(--a-gold); font-size:11px; border-radius:999px;
+  padding:2px 10px; margin-top:8px; }
+
+/* 学習タブ: ルール台帳と予言 */
+.rulerow{ font-size:13.5px; padding:10px 12px; border-left:3px solid var(--a-gold);
+  background:var(--a-bg); border-radius:0 10px 10px 0; margin-bottom:8px; }
+.rulerow .rulemeta{ display:block; font-size:11.5px; color:var(--a-sub); margin-top:3px; }
+.prophecy{ font-size:13.5px; padding:10px 12px; border:1px dashed var(--a-gold);
+  border-radius:10px; margin-bottom:8px; background:var(--a-gold-soft); }
+
+/* 学習タブ（B32）: 8/14 の固定サンプルは「見本」として折りたたむ。解剖の教訓は AI の文のまま */
+.samplefold summary, .lessons summary{ cursor:pointer; font-size:12.5px; color:var(--a-sub); }
+.samplefold h4{ font-size:11.5px; letter-spacing:.12em; color:var(--a-sub); margin:14px 0 6px; }
+.lessons{ margin-top:8px; }
+.lessonrow{ padding:9px 2px; border-bottom:1px solid var(--a-line); font-size:13px; }
+.lessonrow:last-child{ border-bottom:0; }
+.lessonrow p{ margin:3px 0 0; color:var(--a-sub); white-space:pre-wrap; }
+
+/* 守りタブ */
+.shieldrow{ padding:10px 2px; border-bottom:1px solid var(--a-line); }
+.shieldrow:last-child{ border-bottom:0; }
+.shieldrow p{ margin:4px 0 0; font-size:13px; color:var(--a-sub); white-space:pre-wrap; }
+/* B30: 夜便の 1 行をそのまま見せる（銘柄名・利回りの読み取りはしない） */
+.shieldrow .sr-line{ font-size:14px; white-space:pre-wrap; }
+
+/* 保有一覧テーブル（v1.2 Fix2/Fix3）: 1列目（銘柄）を横スクロール時に固定し、
+   ソート可能な列見出しをクリックできることが分かるようにする */
+.holdtable{ border-collapse:collapse; }
+.holdtable th, .holdtable td{ padding:8px 10px; text-align:right; white-space:nowrap; }
+.holdtable th:first-child, .holdtable td:first-child{ text-align:left; white-space:normal; }
+.holdtable thead th{ font-size:11px; color:var(--a-sub); font-weight:600; border-bottom:1px solid var(--a-line); }
+.holdtable tbody td{ font-size:13px; border-bottom:1px solid var(--a-line); font-variant-numeric:tabular-nums; }
+/* 1列目（銘柄）だけ横スクロールに追従させず固定する。縦方向のsticky指定はしない（既存のまま） */
+.holdtable th:first-child, .holdtable td:first-child{
+  position:sticky; left:0; background:var(--a-panel); z-index:2;
+  border-right:1px solid var(--a-line);
+}
+.holdtable th.sortable{ cursor:pointer; user-select:none; }
+
+/* 保有: 一覧とツリーマップ */
+.holdrow{ display:grid; grid-template-columns:1fr auto 74px; gap:8px; align-items:baseline;
+  font-size:13px; padding:8px 2px; border-bottom:1px solid var(--a-line);
+  font-variant-numeric:tabular-nums; }
+.holdrow span:nth-child(2){ color:var(--a-sub); }
+.holdrow span:last-child{ text-align:right; font-weight:700; }
+.holdrow.hr-head span{ font-weight:400; font-size:11px; color:var(--a-sub); }
+.tmrow{ display:flex; gap:3px; margin-bottom:3px; }
+.tm{ display:flex; flex-direction:column; align-items:center; justify-content:center;
+  color:#FFF; font-size:11.5px; font-weight:700; border-radius:6px; overflow:hidden;
+  min-width:0; }
+.tm small{ font-weight:400; font-size:10px; opacity:.85; }
+.tm.up2{ background:#C6392E; } .tm.up1{ background:#D9776D; }
+.tm.flat{ background:#9AA3B5; } .tm.down1{ background:#2F6FA8; }
+
+/* 保有タブ */
+/* B32: 保有データの日付を大きく。古いときの帯は既存の EXIT 色（--a-up / --a-up-soft）を流用 */
+.asofbig{ font-size:20px; font-weight:800; font-variant-numeric:tabular-nums; }
+.warnband{ background:var(--a-up-soft); border:1px solid var(--a-up); color:var(--a-up);
+  border-radius:12px; padding:9px 12px; margin-top:8px; font-size:13px; font-weight:700; }
+.fold{ text-align:center; font-size:12.5px; color:var(--a-sub); padding:10px;
+  border:1px dashed var(--a-line); border-radius:12px; cursor:pointer;
+  user-select:none; margin-top:10px; }
+.foldlist{ display:none; margin-top:8px; }
+.foldlist.show{ display:block; }
+
+/* タブバー */
+.tabbar{ display:flex; border-top:1px solid var(--a-line); background:var(--a-panel);
+  position:fixed; bottom:0; left:0; right:0; z-index:10;
+  padding-bottom:calc(12px + env(safe-area-inset-bottom)); }
+.tabbar button{ flex:1; background:none; border:0; color:var(--a-sub); padding:12px 0 16px;
+  font-size:11px; cursor:pointer; font-family:inherit; }
+.tabbar button .ico{ display:block; font-size:19px; margin-bottom:2px; }
+.tabbar button.on{ color:var(--a-gold); font-weight:700; }
+.tab{ display:none; } .tab.on{ display:block; }
+
+/* ============================================================
+   ここから index.html 固有の追加（モックには無いがTask 7仕様で要求）
+   色・角丸・余白は既存トークン/既存ルールの値を再利用。新規の色は増やしていない
+   ============================================================ */
+
+/* ヘッダー右端: モード表示(subnote)と⚙ボタン。モックの appbar は appname 1個だけだったため
+   右寄せ用のレイアウトのみ追加（gap/paddingは.app header.appbarを流用） */
+/* v1.1 Fix2: ヘッダーがsticky固定になったため、折り返しで高さが伸びると
+   backbtnのsticky top位置とズレる（背後に隠れる）。1行固定にして高さを安定させる */
+#mode-note{ margin-left:auto; white-space:nowrap; overflow:hidden;
+  text-overflow:ellipsis; min-width:0; }
+.gearbtn{ background:none; border:0; font-size:18px; color:var(--a-sub);
+  cursor:pointer; padding:4px; line-height:1; }
+
+/* main.js が使う汎用クラス（Task 7仕様で明示指定） */
+.subnote{ font-size:12.5px; color:var(--a-sub); margin:4px 0 0; }
+.unit{ font-size:17px; }
+.pre{ white-space:pre-wrap; }
+
+/* 根拠の裏取り事実リスト。モックに .facts 定義は無いため、.detail p と同じ文字サイズで最小限に新設 */
+.detail .facts{ margin:0; padding-left:18px; font-size:13.5px; }
+.detail .facts li{ margin:2px 0; }
+
+/* PATダイアログ: panel風の最低限の見た目（.panelの値を流用） */
+#pat-dialog{ background:var(--a-panel); border:1px solid var(--a-line);
+  border-radius:16px; padding:14px 16px; color:var(--a-ink);
+  max-width:320px; width:88vw; font-size:14.5px; }
+#pat-dialog::backdrop{ background:rgba(0,0,0,.4); }
+#pat-dialog input{ width:100%; box-sizing:border-box; padding:8px 10px;
+  border:1px solid var(--a-line); border-radius:8px; font-size:14px; }
+#pat-dialog .dialog-actions{ display:flex; justify-content:flex-end; gap:8px; margin-top:12px; }
+
+/* ---- 🧪 本命v2 タブ（既存トークンのみ使用） ---- */
+.v2group{ border-bottom:1px solid var(--a-line); }
+.v2group:last-child{ border-bottom:0; }
+.v2head{ display:flex; align-items:center; gap:12px; padding:11px 4px; cursor:pointer; }
+.v2head .date{ font-variant-numeric:tabular-nums; font-weight:700; width:74px; }
+.v2head .date small{ display:block; font-weight:400; color:var(--a-sub); font-size:11px; }
+.v2head .digest{ flex:1; font-size:12.5px; color:var(--a-sub); }
+.v2head .digest b{ color:var(--a-ink); }
+.v2head .arrow{ color:var(--a-sub); transition:transform .2s; }
+.v2group.open .v2head .arrow{ transform:rotate(180deg); }
+.v2rows{ display:none; padding:0 0 8px; }
+.v2group.open .v2rows{ display:block; }
+.v2row{ padding:8px 4px 10px; border-top:1px dashed var(--a-line); font-size:13px; }
+.v2main{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.v2status{ font-size:10.5px; font-weight:700; border-radius:6px; padding:2px 7px; border:1px solid var(--a-sub); color:var(--a-sub); }
+.v2status.s-open{ color:var(--a-gold); border-color:var(--a-gold); }
+.v2status.s-closed{ color:var(--a-ink); border-color:var(--a-ink); }
+.v2src{ font-size:11.5px; color:var(--a-sub); }
+.v2twin{ font-size:11.5px; color:var(--a-sub); margin-left:auto; font-variant-numeric:tabular-nums; }
+.v2meta{ font-size:12px; color:var(--a-sub); margin-top:3px; }
+.v2sub{ font-size:12.5px; margin-top:4px; line-height:1.5; }
